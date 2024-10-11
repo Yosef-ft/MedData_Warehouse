@@ -13,6 +13,7 @@ SELECT
     channel_username,
     message,
     date,
-    media_path
+    media_path,
+    ID
 
 FROM filtered_data
