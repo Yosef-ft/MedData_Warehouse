@@ -1,18 +1,18 @@
 {{config(materialized='table')}}
 
--- / Removing duplicates and null values
-WITH filtered_data AS (
-    SELECT DISTINCT ON (media_path, message) * 
-    FROM {{source('public', "RawData")}}
-    WHERE message is not NULL
-    AND media_path is not NULL
-     
+-- / Removing white spaces for the messages column
+
+WITH clean_data as (
+    SELECT 
+        TRIM(message) AS message_cleaned, *
+    FROM {{ref('MedData_cleaned')}}
 )
+
 
 SELECT 
     channel_username,
-    message,
+    message_cleaned,
     date,
     media_path
 
-FROM filtered_data
+FROM clean_data
