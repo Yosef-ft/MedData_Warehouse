@@ -1,1 +1,11 @@
 .venv
+
+.env
+
+logs
+
+data
+
+*.session
+
+__pycache__
