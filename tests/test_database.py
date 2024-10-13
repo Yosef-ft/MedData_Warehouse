@@ -22,10 +22,22 @@ class TestDatabase(unittest.TestCase):
             port= os.getenv('DB_PORT')
         )        
 
+    def test_read_data(self):
+        
+        dbconn = DbConn()
+
+        with patch.object(dbconn, 'read_data') as mock_dbconn:
+            expected_rows = [('Channel_Title', 'Channel_Username', 'ID', 'Message', 'Date', 'Media_Path')]
+            mock_dbconn.return_value = expected_rows
+
+            result = dbconn.read_data('RawData')
+
+            mock_dbconn.assert_called_once_with('RawData')
+            self.assertEqual(result, expected_rows)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity= 1)
 
 
 
