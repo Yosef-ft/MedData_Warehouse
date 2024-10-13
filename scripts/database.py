@@ -1,5 +1,6 @@
 import psycopg2
 import os 
+from typing import *
 
 DB_NAME = os.getenv('DB_NAME')
 DB_USER = os.getenv('DB_USER')
@@ -29,3 +30,22 @@ class DbConn:
             cur.close()
         except Exception as e:
             print(f"Error: {e}")
+
+    
+    def read_data(self, table_name: str)-> List:
+        '''
+        This function is used to read data from a specific table
+
+        Parameter:
+        ---------
+            table_name(str)
+
+        Return:
+        -------
+            List: return a list of rows in the database
+        '''
+
+        cur = self.conn.cursor()
+        cur.execute(f'SELECT * FROM "{table_name}"')
+        rows = cur.fetchall()
+        return rows
