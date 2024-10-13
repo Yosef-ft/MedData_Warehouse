@@ -66,16 +66,16 @@ class Util:
         error_handler.setLevel(logging.ERROR)
         error_handler.setFormatter(formatter)
 
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.DEBUG)
-        console_handler.setFormatter(formatter)
+        # console_handler = logging.StreamHandler()
+        # console_handler.setLevel(logging.DEBUG)
+        # console_handler.setFormatter(formatter)
 
 
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
         logger.addHandler(info_handler)
         logger.addHandler(error_handler)
-        logger.addHandler(console_handler)       
+        # logger.addHandler(console_handler)       
 
         return logger 
     
