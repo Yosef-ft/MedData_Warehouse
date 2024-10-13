@@ -7,10 +7,10 @@ This project aims to create a robust data warehouse for storing and analyzing da
     - Scraping relevant data and images from Telegram channels that focus on Ethiopian medical businesses.
 2. Data Cleaning and Transformation
     - Using DBT (Data Build Tool) for data transformation and documentation.
-
-## Next Step
-1. Object Detection Using YOLO
-2. Data Exposure using fact API
+3. Object Detection Using YOLO
+    - You can open the note books here to see the perfomance of existing pretraind YOLOv5 moodels. <a href="https://colab.research.google.com/github/Yosef-ft/MedData_Warehouse/blob/main/notebooks/Yolo_Pretrained_models.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> 
+    - From the above notebook we can see that there is a need to create a custom model based on our custom medicine data. You can find the details of training a custom model and see the results of the model here. <a href="https://colab.research.google.com/github/Yosef-ft/MedData_Warehouse/blob/main/notebooks/YOLO_Custom_model.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> 
+4. Data Exposure using fact API
 
 ## Getting Started
 ### Prerequisites
