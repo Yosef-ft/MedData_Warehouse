@@ -67,7 +67,7 @@ def delete_product(item_id: int, db: Session = Depends(get_db)):
 
 
 @app.delete('/telegram/{item_id}', response_model=schemas.Telegram)
-def delete_product(item_id: int, db: Session = Depends(get_db)):
+def delete_telegram(item_id: int, db: Session = Depends(get_db)):
     item = crud.delete_item(Telegram, db=db, item_id=item_id)
     if item is None:
         raise HTTPException(status_code=404, detail="Telegram ID not found")
@@ -75,9 +75,35 @@ def delete_product(item_id: int, db: Session = Depends(get_db)):
 
 
 @app.delete('/detected-images/{item_id}', response_model=schemas.Detected_Images)
-def delete_product(item_id: int, db: Session = Depends(get_db)):
+def delete_image(item_id: int, db: Session = Depends(get_db)):
     item = crud.delete_item(Detected_Images, db=db, item_id=item_id)
     if item is None:
         raise HTTPException(status_code=404, detail="Detected image ID not found")
     return item
     
+
+# Below are endpoints to update items
+@app.put('/products/{item_id}', response_model=schemas.Product)
+def update_product(item_id: int, product_update: schemas.Product,db: Session = Depends(get_db)):
+    update_data = product_update.model_dump(exclude_unset=True)
+    print(update_data)
+    product = crud.update_item(Products, db=db, item_id=item_id, update_data=update_data)
+    if product is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return product
+
+@app.put('/telegram/{item_id}', response_model=schemas.Telegram)
+def update_product(item_id: int, telegram_update: schemas.Telegram,db: Session = Depends(get_db)):
+    update_data = telegram_update.model_dump(exclude_unset=True)
+    telegram = crud.update_item(Telegram, db=db, item_id=item_id, update_data=update_data)
+    if telegram is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return telegram
+
+@app.put('/detected-images/{item_id}', response_model=schemas.Detected_Images)
+def update_product(item_id: int, image_update: schemas.Detected_Images,db: Session = Depends(get_db)):
+    update_data = image_update.model_dump(exclude_unset=True)
+    image = crud.update_item(Detected_Images, db=db, item_id=item_id, update_data=update_data)
+    if image is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return image

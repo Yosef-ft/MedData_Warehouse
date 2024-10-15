@@ -28,7 +28,7 @@ class Detected_Image_Create(BaseModel):
 
 class Product(BaseModel):
     ID: int = Field( alias="ID") 
-    price: Optional[int] = Field(None, alias="Price") 
+    Price: Optional[int] = Field(None, alias="Price") 
     Product: str
     Tellno: str
     Address: str
