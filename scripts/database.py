@@ -1,6 +1,8 @@
 import psycopg2
+from sqlalchemy import create_engine
 import os 
 from typing import *
+import pandas as pd
 
 DB_NAME = os.getenv('DB_NAME')
 DB_USER = os.getenv('DB_USER')
@@ -28,6 +30,7 @@ class DbConn:
             cur.execute(query, (Channel_Title, Channel_Username, ID, Message, Date, Media_Path))
             self.conn.commit()
             cur.close()
+            self.conn.close()
         except Exception as e:
             print(f"Error: {e}")
 
@@ -48,4 +51,20 @@ class DbConn:
         cur = self.conn.cursor()
         cur.execute(f'SELECT * FROM "{table_name}"')
         rows = cur.fetchall()
+        self.conn.close()
         return rows
+    
+
+class DatabaseConn:
+    '''
+    This class is for creating connection to the database and fetching data
+    '''
+    def __init__(self):      
+
+        self.engine = create_engine(f'postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}')
+
+    def insert_dataframe_data(self, table_name: str, data: pd.DataFrame):
+        '''
+        This funtion saves dataframe to the database
+        '''
+        data.to_sql(table_name, self.engine, if_exists='replace')        
