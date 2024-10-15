@@ -32,3 +32,12 @@ def create_item(model, db: Session, item):
     db.commit()
     db.refresh(db_item)
     return db_item
+
+
+def delete_item(model, db: Session, item_id):
+    db_item = db.query(model).filter(model.ID == item_id).first()
+    if db_item is None:
+        return None     
+    db.delete(db_item)
+    db.commit()
+    return db_item

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 import crud, models, schemas
 from database import engine, get_db
@@ -55,3 +55,29 @@ def create_telegram(telegram: schemas.TelegramCreate, db: Session = Depends(get_
 @app.post('/detected-images/', response_model= schemas.Detected_Images)
 def create_image(image: schemas.Detected_Image_Create, db: Session = Depends(get_db)):
     return crud.create_item(Detected_Images, db=db, item=image)
+
+
+# Below are endpoint to delete items
+@app.delete('/products/{item_id}', response_model=schemas.Product)
+def delete_product(item_id: int, db: Session = Depends(get_db)):
+    item = crud.delete_item(Products, db=db, item_id=item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return item
+
+
+@app.delete('/telegram/{item_id}', response_model=schemas.Telegram)
+def delete_product(item_id: int, db: Session = Depends(get_db)):
+    item = crud.delete_item(Telegram, db=db, item_id=item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Telegram ID not found")
+    return item
+
+
+@app.delete('/detected-images/{item_id}', response_model=schemas.Detected_Images)
+def delete_product(item_id: int, db: Session = Depends(get_db)):
+    item = crud.delete_item(Detected_Images, db=db, item_id=item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Detected image ID not found")
+    return item
+    
