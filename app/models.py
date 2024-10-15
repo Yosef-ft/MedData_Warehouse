@@ -1,21 +1,21 @@
-from sqlalchemy import Column, Integer, Text, TIMESTAMP, BIGINT, String, FLOAT
+from sqlalchemy import Column, Integer, Text, TIMESTAMP, BIGINT, String, FLOAT, DateTime
 from database import Base
 
 class Products(Base):
     __tablename__ = "Products"
 
-    ID = Column(BIGINT, primary_key=True)
-    Product = Column(Text)
-    Price = Column(Text)
-    Address = Column(Text)
-    Tellno = Column(Text)
+    ID = Column(BIGINT, primary_key=True, index=True)
+    Product = Column(Text, index=True)
+    Price = Column(Text, index=True)
+    Address = Column(Text, index=True)
+    Tellno = Column(Text, index=True)
 
 
 class Telegram(Base):
     __tablename__ = "Telegram"
 
     Channel_username = Column(Text)
-    Date = Column(String)
+    Date = Column(DateTime)
     Media_path = Column(Text)
     Message = Column(Text)
     ID = Column(BIGINT, primary_key=True)

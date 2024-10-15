@@ -15,7 +15,7 @@ def get_items(model, db: Session, limit: int= 10):
     return db.query(model).limit(limit).all()
 
 
-def get_item(model, db: Session, item_id):
+def get_item_by_id(model, db: Session, item_id):
     
     if model == Telegram:
         telegram = db.query(model).filter(model.ID == item_id).first()
@@ -24,3 +24,11 @@ def get_item(model, db: Session, item_id):
         return telegram
     
     return db.query(model).filter(model.ID == item_id).first()
+
+
+def create_item(model, db: Session, item):
+    db_item = model(**item.dict())
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
